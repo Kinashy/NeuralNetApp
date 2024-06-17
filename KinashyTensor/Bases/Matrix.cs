@@ -29,5 +29,8 @@ namespace KinashyTensor.Bases
             }
         }
         public abstract Matrix<T> Trans();
+        public abstract Vector<T> ToVector();
+        public abstract Matrix<T> SubMatrix(int rowIndex , int rowCount, int columnIndex, int columnCount);
+
     }
 }

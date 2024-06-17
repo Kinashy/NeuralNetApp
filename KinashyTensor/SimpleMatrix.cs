@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 using KinashyTensor.Bases;
@@ -24,6 +25,8 @@ namespace KinashyTensor
             return clone;
         }
 
+        public override Vector<T> ToVector() => _factory.CreateVector(_values.SelectMany(x => x).ToList());
+
         public override Matrix<T> Trans()
         {
             var trans = _factory.CreateMatrix<T>(ColumnsCount, RowsCount);
@@ -31,6 +34,15 @@ namespace KinashyTensor
                 for (int j = 0; j < ColumnsCount; j++)
                     trans[j][i] = _values[i][j];
             return trans;
+        }
+
+        public override Matrix<T> SubMatrix(int rowIndex, int rowCount, int columnIndex, int columnCount)
+        {
+            var sub = _factory.CreateMatrix<T>(rowCount, columnCount);
+            for (int i = rowIndex; i < rowCount; i++)
+                for (int j = columnIndex; j < columnCount; j++)
+                    sub[i][j] = _values[i][j];
+            return sub;
         }
     }
 }
